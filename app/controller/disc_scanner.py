@@ -1,4 +1,5 @@
 import os
+import glob
 from model.file_tree import Tree, Node
 
 
@@ -26,7 +27,8 @@ def update_biggest(n, biggest, files, root):
     return biggest
 
 
-def get_n_biggest(start_dir=os.path.expanduser('~'), n=10, consider_files=True, consider_directories=False, recursive=True):
+def get_n_biggest(start_dir=os.path.expanduser('~'), n=10, consider_files=True, consider_directories=False,
+                  recursive=True):
     biggest = []
     if recursive:
         for root, dirs, files in os.walk(os.path.abspath(start_dir)):
@@ -40,10 +42,23 @@ def get_n_biggest(start_dir=os.path.expanduser('~'), n=10, consider_files=True, 
             biggest = [f for f in biggest if not os.path.isdir(os.path.abspath(os.path.join(start_dir, f)))]
         if not consider_files:
             biggest = [f for f in biggest if os.path.isdir(os.path.abspath(os.path.join(start_dir, f)))]
-    return sorted(biggest, key=lambda tup:tup[1], reverse=True)[:n]
+    return sorted(biggest, key=lambda tup: tup[1], reverse=True)[:n]
+
+
+def advanced_search(path=os.path.expanduser('~'), size_range=None, date_range=None, extensions=None):
+    files = []
+    if extensions:
+        for extension in extensions:
+            files.extend(glob.glob(os.path.join(path, '**', f'*.{extension}'), recursive=True))
+    if date_range:
+        files = [file for file in files if date_range[0] < os.path.getmtime(file) < date_range[1]]
+    if size_range:
+        files = [file for file in files if size_range[0] < os.path.getsize(file) < size_range[1]]
+    return [os.path.abspath(file) for file in files]
 
 
 if __name__ == '__main__':
-    print(get_n_biggest('..', n=3, recursive=False, consider_directories=True))
+    print(advanced_search(path=os.path.join('..', '..', '..', '..'), extensions=['zip', 'ui']))
+    # print(get_n_biggest('..', n=3, recursive=False, consider_directories=True))
     # tree = build_file_tree(os.path.abspath('.'))
     # tree.bfs()
