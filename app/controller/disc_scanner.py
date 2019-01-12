@@ -46,10 +46,12 @@ def get_n_biggest(start_dir=os.path.expanduser('~'), n=10, consider_files=True, 
 
 
 def advanced_search(path=os.path.expanduser('~'), size_range=None, date_range=None, extensions=None):
-    files = []
     if extensions:
+        files = []
         for extension in extensions:
             files.extend(glob.glob(os.path.join(path, '**', f'*.{extension}'), recursive=True))
+    else:
+        files = [os.path.join(root, file) for root, dirs, files in os.walk(path) for file in files]
     if date_range:
         files = [file for file in files if date_range[0] < os.path.getmtime(file) < date_range[1]]
     if size_range:
@@ -58,7 +60,9 @@ def advanced_search(path=os.path.expanduser('~'), size_range=None, date_range=No
 
 
 if __name__ == '__main__':
-    print(advanced_search(path=os.path.join('..', '..', '..', '..'), extensions=['zip', 'ui']))
+    search_results = advanced_search(path=os.path.join('..', '..', '..', '..'))
+    print(search_results)
+    print(len(search_results))
     # print(get_n_biggest('..', n=3, recursive=False, consider_directories=True))
     # tree = build_file_tree(os.path.abspath('.'))
     # tree.bfs()
