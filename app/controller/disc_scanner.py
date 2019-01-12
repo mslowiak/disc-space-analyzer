@@ -1,5 +1,6 @@
-import os
 import glob
+import os
+
 from model.file_tree import Tree, Node
 
 
@@ -53,13 +54,17 @@ def advanced_search(path=os.path.expanduser('~'), size_range=None, date_range=No
     else:
         files = [os.path.join(root, file) for root, dirs, files in os.walk(path) for file in files]
     if date_range:
-        files = [file for file in files if date_range[0] < os.path.getmtime(file) < date_range[1]]
+        files = [file for file in files if date_range[0] <= os.path.getmtime(file) < date_range[1]]
     if size_range:
-        files = [file for file in files if size_range[0] < os.path.getsize(file) < size_range[1]]
+        files = [file for file in files if size_range[0] <= os.path.getsize(file) < size_range[1]]
     return [os.path.abspath(file) for file in files]
 
 
 if __name__ == '__main__':
+    search_results = advanced_search(path=os.path.join('..', '..', '..', '..'),
+                                     size_range=(0, 1000000000000000000000000000))
+    print(search_results)
+    print(len(search_results))
     search_results = advanced_search(path=os.path.join('..', '..', '..', '..'))
     print(search_results)
     print(len(search_results))
