@@ -63,7 +63,7 @@ class AdvancedSearchWidget(QWidget):
             lambda: self.state_changed(
                 self.fileSizeCheckbox,
                 self.fileSizeFromSpinBox,
-                self.fileSizeTopSpinBox
+                self.fileSizeToSpinBox
             )
         )
         self.creationDateCheckbox.stateChanged.connect(
