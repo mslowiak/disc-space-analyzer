@@ -18,7 +18,7 @@ class AppMainWindow(QMainWindow):
         Sets size of application and calls first view to display.
         """
         super(AppMainWindow, self).__init__(parent)
-        self.setFixedSize(800, 800)
+        self.setFixedSize(1200, 800)
         self.actual_widget = None
         self.start_scan_view()
 
