@@ -34,8 +34,7 @@ class ResultsDefaultSearchWidget(QWidget):
         self.initialize_top_ten_size_dirs(top_size_dirs_header, mock_data_dirs)
 
     def initialize_results_tree(self):
-        print(self.topTenDirsTableView.horizontalHeader().size().width())
-        print(self.topTenFilesTableView.horizontalHeader().size().width())
+        # https://stackoverflow.com/questions/47102920/pyqt5-how-to-generate-a-qtreeview-from-a-list-of-dictionary-items
         pass
 
     def initialize_top_ten_size_dirs(self, header_labels, data):
