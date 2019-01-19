@@ -61,7 +61,7 @@ class ResultsAdvancedSearchWidget(QWidget):
         self.topSizeFilesTableView.setModel(model)
 
         header = self.topSizeFilesTableView.horizontalHeader()
-        table_width = header.size().width() - 15
+        table_width = header.size().width()
         columns_width = [table_width / 12 * 3, table_width / 12 * 5, table_width / 12 * 2, table_width / 12 * 2]
         for idx, value in enumerate(columns_width):
             self.topSizeFilesTableView.setColumnWidth(idx, value)
@@ -74,4 +74,5 @@ class ResultsAdvancedSearchWidget(QWidget):
                 row.append(item)
             model.appendRow(row)
 
-        self.topSizeFilesTableView.sortByColumn(0, Qt.AscendingOrder)
+        self.topSizeFilesTableView.sortByColumn(3, Qt.DescendingOrder)
+        self.topSizeFilesTableView.verticalHeader().setVisible(False)
