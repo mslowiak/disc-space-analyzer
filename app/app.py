@@ -3,10 +3,9 @@ import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow
 
 from view.results_advanced_search_widget import ResultsAdvancedSearchWidget
+from view.results_default_search_widget import ResultsDefaultSearchWidget
 from view.scan_widget import ScanWidget
 from view.advanced_search_widget import AdvancedSearchWidget
-from view.results_rarely_used_widget import ResultsRarelyUsedWidget
-from view.results_top_size_widget import ResultsTopSizeUsedWidget
 
 
 class AppMainWindow(QMainWindow):
@@ -45,10 +44,10 @@ class AppMainWindow(QMainWindow):
         self.setCentralWidget(self.actual_widget)
         self.show()
 
-    def start_results_advanced_search(self):
+    def start_results_advanced_search_view(self):
         """
         Displays widget in main window.
-        Contains results with top size files grouped by extensions.
+        Contains results with from advanced search.
         """
         self.hide_widget()
         self.actual_widget = ResultsAdvancedSearchWidget(self)
@@ -56,25 +55,14 @@ class AppMainWindow(QMainWindow):
         self.setCentralWidget(self.actual_widget)
         self.show()
 
-    def start_results_rarely_used_view(self):
+    def start_results_default_search_view(self):
         """
         Displays widget in main window.
-        Contains results with rarely used files.
+        Contains results from default search.
         """
         self.hide_widget()
-        self.actual_widget = ResultsRarelyUsedWidget(self)
-        self.setWindowTitle("Disc Space Analyzer - Results rarely used files")
-        self.setCentralWidget(self.actual_widget)
-        self.show()
-
-    def start_results_top_size_view(self):
-        """
-        Displays widget in main window.
-        Contains results with top size files and directories.
-        """
-        self.hide_widget()
-        self.actual_widget = ResultsTopSizeUsedWidget(self)
-        self.setWindowTitle("Disc Space Analyzer - Results top size files and dirs")
+        self.actual_widget = ResultsDefaultSearchWidget(self)
+        self.setWindowTitle("Disc Space Analyzer - Results of default search")
         self.setCentralWidget(self.actual_widget)
         self.show()
 
