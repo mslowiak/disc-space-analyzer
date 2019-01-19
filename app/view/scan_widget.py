@@ -2,10 +2,6 @@ from PyQt5 import uic
 from PyQt5.QtWidgets import QWidget
 
 
-def temporary_method(name):
-    print("Handle " + name)
-
-
 class ScanWidget(QWidget):
     """
     Widget class with scan view.
@@ -24,4 +20,4 @@ class ScanWidget(QWidget):
         Method handling buttons on click action
         """
         self.advancedScanButton.clicked.connect(parent.start_advanced_search_view)
-        self.fastScanButton.clicked.connect(lambda: temporary_method("fastScanButton"))
+        self.fastScanButton.clicked.connect(parent.start_results_default_search_view)
