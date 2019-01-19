@@ -23,7 +23,7 @@ class AdvancedSearchWidget(QWidget):
         :param parent: - parent window
         """
         self.homeButton.clicked.connect(parent.start_scan_view)
-        self.scanButton.clicked.connect(self.extract_data_from_fields)
+        self.scanButton.clicked.connect(parent.start_results_advanced_search)
 
     def extract_data_from_fields(self):
         """

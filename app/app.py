@@ -1,9 +1,10 @@
 import sys
 
 from PyQt5.QtWidgets import QApplication, QMainWindow
+
+from view.results_advanced_search_widget import ResultsAdvancedSearchWidget
 from view.scan_widget import ScanWidget
 from view.advanced_search_widget import AdvancedSearchWidget
-from view.results_extensions_widget import ResultsExtensionsWidget
 from view.results_rarely_used_widget import ResultsRarelyUsedWidget
 from view.results_top_size_widget import ResultsTopSizeUsedWidget
 
@@ -44,14 +45,14 @@ class AppMainWindow(QMainWindow):
         self.setCentralWidget(self.actual_widget)
         self.show()
 
-    def start_results_extensions_view(self):
+    def start_results_advanced_search(self):
         """
         Displays widget in main window.
         Contains results with top size files grouped by extensions.
         """
         self.hide_widget()
-        self.actual_widget = ResultsExtensionsWidget(self)
-        self.setWindowTitle("Disc Space Analyzer - Results top size file extensions")
+        self.actual_widget = ResultsAdvancedSearchWidget(self)
+        self.setWindowTitle("Disc Space Analyzer - Results of advanced search")
         self.setCentralWidget(self.actual_widget)
         self.show()
 
