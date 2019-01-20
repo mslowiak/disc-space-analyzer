@@ -46,7 +46,9 @@ def get_n_biggest(start_dir=os.path.expanduser('~'), n=10, consider_files=True, 
     return sorted(biggest, key=lambda tup: tup[1], reverse=True)[:n]
 
 
-def advanced_search(path=os.path.expanduser('~'), size_range=None, date_range=None, extensions=None):
+def advanced_search(path=None, size_range=None, date_range=None, extensions=None):
+    if not path:
+        path = os.path.expanduser('~')
     if extensions:
         files = []
         for extension in extensions:
