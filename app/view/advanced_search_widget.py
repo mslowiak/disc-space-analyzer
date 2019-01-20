@@ -85,6 +85,8 @@ class AdvancedSearchWidget(QWidget):
 
         if self.extensionsCheckbox.isChecked():
             extensions = None
+        else:
+            extensions = extensions.split(';')
 
         self.search_thread = AdvancedSearchThread(
             parent=self.parent,

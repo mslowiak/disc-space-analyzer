@@ -46,3 +46,12 @@ class Tree:
         for child in node.children:
             heights.append(self._height(child))
         return max(heights) + 1 if heights else 0
+
+
+class File:
+    def __init__(self, name, location, extension, file_size, creation_date):
+        self.name = name
+        self.location = location
+        self.extension = extension
+        self.file_size = file_size
+        self.creation_date = creation_date
