@@ -1,5 +1,6 @@
+from collections import defaultdict
+
 from PyQt5 import uic
-from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QStandardItemModel, QStandardItem
 from PyQt5.QtWidgets import QWidget
 
@@ -19,18 +20,14 @@ class ResultsAdvancedSearchWidget(QWidget):
         super(ResultsAdvancedSearchWidget, self).__init__(parent)
         uic.loadUi('ui/results_advanced_search_component.ui', self)
 
-        mock_labels = ['.exe', '.zip', '.doc', '.txt']
-        mock_percentage = [15, 30, 45, 10]
+        pie_chart_labels, pie_chart_values = self.get_data_for_pie_chart(search_results_data)
 
-        mock_headers = ['File Name', 'Location', 'Extension', 'File Size (KB)']
-        mock_data = [
-            ['plik1.txt', 'D:folder\\ukryte', 'txt', 142],
-            ['plik1.txt', 'D:folder\\ukryte', 'txt', 142]
-        ]
+        top_size_headers = ['File Name', 'Location', 'Extension', 'File Size (KB)']
+        top_size_data = self.get_data_for_top_size_list(search_results_data)
 
         self.handle_buttons(parent)
-        self.initialize_top_file_extensions_view(mock_labels, mock_percentage)
-        self.initialize_top_size_files_view(mock_headers, mock_data)
+        self.initialize_top_file_extensions_view(pie_chart_labels, pie_chart_values)
+        self.initialize_top_size_files_view(top_size_headers, top_size_data)
 
     def handle_buttons(self, parent):
         """
@@ -74,5 +71,16 @@ class ResultsAdvancedSearchWidget(QWidget):
                 row.append(item)
             model.appendRow(row)
 
-        self.topSizeFilesTableView.sortByColumn(3, Qt.DescendingOrder)
         self.topSizeFilesTableView.verticalHeader().setVisible(False)
+
+    def get_data_for_pie_chart(self, search_results):
+        my_ext = list(map(lambda file: file.extension, search_results))
+        occurences = defaultdict(int)
+        for ext in my_ext:
+            occurences[ext] += 1
+        return list(occurences.keys()), list(occurences.values())
+
+    def get_data_for_top_size_list(self, search_results):
+        without_date = list(
+            map(lambda file: [file.name, file.location, file.extension, file.file_size], search_results))
+        return sorted(without_date, key=lambda x: x[3], reverse=True)
