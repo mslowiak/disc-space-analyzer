@@ -100,9 +100,9 @@ class AdvancedSearchWidget(QWidget):
         self.search_thread.start()
         self.search_thread.sig1.connect(self.handle_processed_paths)
 
-    def handle_processed_paths(self):
+    def handle_processed_paths(self, search_results_data):
         self.search_thread.exit(1)
-        self.parent.start_results_advanced_search_view()
+        self.parent.start_results_advanced_search_view(search_results_data)
 
     def handle_checkboxes(self):
         """

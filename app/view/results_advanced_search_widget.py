@@ -11,7 +11,7 @@ class ResultsAdvancedSearchWidget(QWidget):
     Widget class with advanced search results view (extensions and top size files view).
     """
 
-    def __init__(self, parent=None):
+    def __init__(self, search_results_data, parent=None):
         """"
         Init method.
         Loads view defined in ui/results_advanced_search_component.ui

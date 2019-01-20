@@ -44,13 +44,13 @@ class AppMainWindow(QMainWindow):
         self.setCentralWidget(self.actual_widget)
         self.show()
 
-    def start_results_advanced_search_view(self):
+    def start_results_advanced_search_view(self, search_results_data):
         """
         Displays widget in main window.
         Contains results with from advanced search.
         """
         self.hide_widget()
-        self.actual_widget = ResultsAdvancedSearchWidget(self)
+        self.actual_widget = ResultsAdvancedSearchWidget(search_results_data=search_results_data, parent=self)
         self.setWindowTitle("Disc Space Analyzer - Results of advanced search")
         self.setCentralWidget(self.actual_widget)
         self.show()
