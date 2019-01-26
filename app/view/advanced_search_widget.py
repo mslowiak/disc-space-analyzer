@@ -34,6 +34,10 @@ class AdvancedSearchWidget(QWidget):
         self.scanButton.clicked.connect(self.handle_scan_click)
 
     def handle_scan_click(self):
+        """
+        Handle scan button action event.
+        Responsible for enabling waiting bar
+        """
         label = QLabel(self)
         label.setText("SEARCHING")
         self.setDisabled(True)
@@ -101,6 +105,10 @@ class AdvancedSearchWidget(QWidget):
         self.search_thread.sig1.connect(self.handle_processed_paths)
 
     def handle_processed_paths(self, search_results_data):
+        """
+        Handle searched file paths.
+        Responsible for changing view to results view
+        """
         self.search_thread.exit(1)
         self.parent.start_results_advanced_search_view(search_results_data)
 

@@ -8,6 +8,10 @@ class PlotCanvas(FigureCanvas):
     Wrapper that allows to put matplotlibcode in QT application
     """
     def __init__(self, labels, percentage, parent=None):
+        """"
+        Init method.
+        Loads matplotlib component to pyqt canvas component.
+        """
         fig = Figure(figsize=(9, 4.5), dpi=100)
         self.axes = fig.add_subplot(111)
 

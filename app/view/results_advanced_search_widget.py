@@ -74,6 +74,10 @@ class ResultsAdvancedSearchWidget(QWidget):
         self.topSizeFilesTableView.verticalHeader().setVisible(False)
 
     def get_data_for_pie_chart(self, search_results):
+        """"
+        Responsible for mapping results to compatible format for pie chart view.
+        :param search_results: results from advanced search view
+        """
         my_ext = list(map(lambda file: file.extension, search_results))
         occurences = defaultdict(int)
         for ext in my_ext:
@@ -81,6 +85,10 @@ class ResultsAdvancedSearchWidget(QWidget):
         return list(occurences.keys()), list(occurences.values())
 
     def get_data_for_top_size_list(self, search_results):
+        """"
+        Responsible for mapping results to compatible format for top size list view.
+        :param search_results: results from advanced search view
+        """
         without_date = list(
             map(lambda file: [file.name, file.location, file.extension, file.file_size], search_results))
         return sorted(without_date, key=lambda x: x[3], reverse=True)

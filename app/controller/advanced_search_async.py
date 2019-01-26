@@ -9,9 +9,20 @@ from model.file_tree import File
 
 
 class AdvancedSearchThread(QThread):
+    """"
+    Class for apply non blocking search call by given properties
+    """
     sig1 = pyqtSignal(list)
 
     def __init__(self, parent=None, path=None, size_range=None, date_range=None, extensions=None):
+        """
+        Init method.
+        :param parent: parent component view
+        :param path: path to scan
+        :param size_range: files size range to scan
+        :param date_range: files date range to scan
+        :param extensions: files extensions to scan
+        """
         QThread.__init__(self)
         self.parent = parent
         self.path = path
@@ -21,9 +32,13 @@ class AdvancedSearchThread(QThread):
         self.output = []
 
     def on_event(self):
+        """"
+        Listener method.
+        """
         Thread(target=self.handle_searching).start()
 
     def handle_searching(self):
+        # TODO: Konrad twoja metoda, troche zmienilem
         if not self.path:
             self.path = os.path.expanduser('~')
         if self.extensions:
@@ -37,10 +52,14 @@ class AdvancedSearchThread(QThread):
         if self.size_range:
             files = [file for file in files if self.size_range[0] <= os.path.getsize(file) < self.size_range[1]]
         tuples = [(os.path.abspath(file), os.stat(os.path.abspath(file))) for file in files]
-        self.output = [self.toFile(file_info_tuple) for file_info_tuple in tuples]
+        self.output = [self.to_file(file_info_tuple) for file_info_tuple in tuples]
         self.sig1.emit(self.output)
 
-    def toFile(self, file_info_tuple):
+    def to_file(self, file_info_tuple):
+        """"
+        Mapper - properties to File class object
+        :param file_info_tuple: tuple with path and stats
+        """
         f_path = file_info_tuple[0]
         f_stats = file_info_tuple[1]
         split_path = os.path.split(f_path)

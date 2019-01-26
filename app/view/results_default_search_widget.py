@@ -34,10 +34,18 @@ class ResultsDefaultSearchWidget(QWidget):
         self.initialize_top_ten_size_dirs(top_size_dirs_header, mock_data_dirs)
 
     def initialize_results_tree(self):
+        """
+        Initialize results tree view.
+        """
         # https://stackoverflow.com/questions/47102920/pyqt5-how-to-generate-a-qtreeview-from-a-list-of-dictionary-items
         pass
 
     def initialize_top_ten_size_dirs(self, header_labels, data):
+        """
+        Initialize top ten size dirs view.
+        :param header_labels: labels for table on view
+        :param data: data for table on view
+        """
         model = QStandardItemModel()
         model.setHorizontalHeaderLabels(header_labels)
 
@@ -61,6 +69,11 @@ class ResultsDefaultSearchWidget(QWidget):
         self.topTenDirsTableView.verticalHeader().setVisible(False)
 
     def initialize_top_ten_size_files(self, header_labels, data):
+        """
+        Initialize top ten size files view.
+        :param header_labels: labels for table on view
+        :param data: data for table on view
+        """
         model = QStandardItemModel()
         model.setHorizontalHeaderLabels(header_labels)
 
