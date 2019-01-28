@@ -68,7 +68,7 @@ class AdvancedSearchWidget(QWidget):
         parent_path = self.parentPathTextInput.toPlainText()
         extensions = self.extensionsTextInput.toPlainText()
 
-        if not self.creationDateCheckbox.isChecked():
+        if not self.fileSizeCheckbox.isChecked():
             size_range = [file_size_from, file_size_to]
             if file_size_from > file_size_to:
                 raise ValueError('Incorrect file size range')
