@@ -61,10 +61,8 @@ class AdvancedSearchWidget(QWidget):
         """
         Extract data from elements in component
         """
-        creation_date_from = self.createdFromDate.dateTime() \
-            .toString(self.createdFromDate.displayFormat())
-        creation_date_to = self.createdToDate.dateTime() \
-            .toString(self.createdToDate.displayFormat())
+        creation_date_from = self.createdFromDate.dateTime().toMSecsSinceEpoch() / 1000
+        creation_date_to = self.createdToDate.dateTime().toMSecsSinceEpoch() / 1000
         file_size_from = self.fileSizeFromSpinBox.value()
         file_size_to = self.fileSizeToSpinBox.value()
         parent_path = self.parentPathTextInput.toPlainText()
