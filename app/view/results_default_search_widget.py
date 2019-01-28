@@ -29,9 +29,17 @@ class ResultsDefaultSearchWidget(QWidget):
             ['python', 'D:folder\\nauka\\projekty', 1233]
         ]
 
+        self.handle_buttons(parent)
         self.initialize_results_tree()
         self.initialize_top_ten_size_files(top_size_files_header, mock_data_files)
         self.initialize_top_ten_size_dirs(top_size_dirs_header, mock_data_dirs)
+
+    def handle_buttons(self, parent):
+        """
+        Handle all buttons action events.
+        :param parent: - parent window
+        """
+        self.homeButton.clicked.connect(parent.start_scan_view)
 
     def initialize_results_tree(self):
         """
