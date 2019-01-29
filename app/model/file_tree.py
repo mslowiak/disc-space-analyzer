@@ -20,4 +20,3 @@ class File:
         self.extension = extension
         self.file_size = file_size
         self.creation_date = creation_date
-

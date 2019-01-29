@@ -31,7 +31,7 @@ def update_biggest(n, biggest, files, root):
     for f in files:
         f = os.path.abspath(os.path.join(root, f))
         f_size = os.path.getsize(f)
-        biggest.append(File(f, f_size, os.path.abspath(os.path.join(f, os.pardir))))
+        biggest.append(File(os.path.basename(f), f_size, os.path.abspath(os.path.join(f, os.pardir))))
         if len(biggest) > n:
             min_ = min(biggest, key=lambda p: p.size)
             biggest.remove(min_)
@@ -51,7 +51,7 @@ def get_n_biggest(start_dir=os.path.expanduser('~'), n=10, consider_files=True, 
             except (FileNotFoundError, OSError):
                 continue
     else:
-        biggest = [File(f, os.path.getsize(f), os.path.abspath(os.path.join(f, os.pardir))) for f in
+        biggest = [File(os.path.basename(f), os.path.getsize(f), os.path.abspath(os.path.join(f, os.pardir))) for f in
                    os.listdir(os.path.abspath(start_dir))]
         if not consider_directories:
             biggest = [f for f in biggest if not os.path.isdir(os.path.abspath(os.path.join(start_dir, f.name)))]
