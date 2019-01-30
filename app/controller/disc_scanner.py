@@ -1,15 +1,18 @@
 import glob
 import os
-from collections import namedtuple, deque
+from collections import deque
 
 from PyQt5.QtGui import QStandardItem
 
-from model.file_tree import Node
-
-File = namedtuple('File', ['name', 'size', 'pardir'])
+from model.file_tree import Node, File_short as File
 
 
 def build_file_tree(start_path=os.path.expanduser('~')):
+    """
+    Walk the file tree and return list of Node representing found files
+    :param start_path: - starting path of the search
+    :return: - list of Node representing found files
+    """
     root = Node(start_path, os.path.isdir(start_path), level=0, parent=None)
     queue = [root]
     ret = []
@@ -19,7 +22,8 @@ def build_file_tree(start_path=os.path.expanduser('~')):
             ret.append(node)
             if node.is_dir:
                 node.children = [Node(os.path.abspath(os.path.join(node.path, path)),
-                                      os.path.isdir(os.path.abspath(os.path.join(node.path, path))), level=node.level + 1, parent=node)
+                                      os.path.isdir(os.path.abspath(os.path.join(node.path, path))),
+                                      level=node.level + 1, parent=node)
                                  for path in os.listdir(node.path)]
                 queue.extend(node.children)
         except (PermissionError, FileNotFoundError):
@@ -27,7 +31,7 @@ def build_file_tree(start_path=os.path.expanduser('~')):
     return ret
 
 
-def update_biggest(n, biggest, files, root):
+def _update_biggest(n, biggest, files, root):
     for f in files:
         f = os.path.abspath(os.path.join(root, f))
         f_size = os.path.getsize(f)
@@ -40,14 +44,22 @@ def update_biggest(n, biggest, files, root):
 
 def get_n_biggest(start_dir=os.path.expanduser('~'), n=10, consider_files=True, consider_directories=False,
                   recursive=True):
+    """
+    :param start_dir: - starting path of the search
+    :param n: - number of files to return
+    :param consider_files: - if files should be considered during search
+    :param consider_directories: - if directories should be considered during search
+    :param recursive: - if the search should be performed recursively
+    :return: - (max) n element list of File sorted by File.size and reversed
+    """
     biggest = []
     if recursive:
         for root, dirs, files in os.walk(os.path.abspath(start_dir)):
             try:
                 if consider_directories:
-                    biggest = update_biggest(n, biggest, dirs, root)
+                    biggest = _update_biggest(n, biggest, dirs, root)
                 if consider_files:
-                    biggest = update_biggest(n, biggest, files, root)
+                    biggest = _update_biggest(n, biggest, files, root)
             except (FileNotFoundError, OSError):
                 continue
     else:
@@ -61,6 +73,14 @@ def get_n_biggest(start_dir=os.path.expanduser('~'), n=10, consider_files=True, 
 
 
 def advanced_search(path=None, size_range=None, date_range=None, extensions=None):
+    """
+    Return results of advanced search considering constraints given in parameters
+    :param path: - starting path of the search:
+    :param size_range: - list [size_from, size_to] filters search result with respect to file size
+    :param date_range: - list [time_from, time_to] filters search result with respect to modification time
+    :param extensions - list only searches for files with extension in extensions:
+    :return: - list of absolute paths to found files
+    """
     if not path:
         path = os.path.expanduser('~')
     if extensions:
@@ -77,6 +97,12 @@ def advanced_search(path=None, size_range=None, date_range=None, extensions=None
 
 
 def import_data(model, file_tree, root=None):
+    """
+    Populate UI model with contents of file tree
+    :param model QStandardItemModel instance
+    :param file_tree list of Node
+    :param root UI root item
+    """
     model.setRowCount(0)
     if root is None:
         root = model.invisibleRootItem()

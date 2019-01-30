@@ -1,4 +1,7 @@
 import os
+from collections import namedtuple
+
+File_short = namedtuple('File', ['name', 'size', 'pardir'])
 
 
 class Node:
