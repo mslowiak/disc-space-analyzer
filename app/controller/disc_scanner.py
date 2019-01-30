@@ -7,12 +7,15 @@ from PyQt5.QtGui import QStandardItem
 from model.file_tree import Node, File_short as File
 
 
-def build_file_tree(start_path=os.path.expanduser('~')):
+def build_file_tree(start_path=None):
     """
     Walk the file tree and return list of Node representing found files
     :param start_path: - starting path of the search
     :return: - list of Node representing found files
     """
+
+    if not start_path:
+        start_path = os.path.expanduser('~')
     root = Node(start_path, os.path.isdir(start_path), level=0, parent=None)
     queue = [root]
     ret = []
@@ -42,7 +45,7 @@ def _update_biggest(n, biggest, files, root):
     return biggest
 
 
-def get_n_biggest(start_dir=os.path.expanduser('~'), n=10, consider_files=True, consider_directories=False,
+def get_n_biggest(start_dir=None, n=10, consider_files=True, consider_directories=False,
                   recursive=True):
     """
     :param start_dir: - starting path of the search
@@ -52,6 +55,9 @@ def get_n_biggest(start_dir=os.path.expanduser('~'), n=10, consider_files=True, 
     :param recursive: - if the search should be performed recursively
     :return: - (max) n element list of File sorted by File.size and reversed
     """
+
+    if not start_dir:
+        start_dir = os.path.expanduser('~')
     biggest = []
     if recursive:
         for root, dirs, files in os.walk(os.path.abspath(start_dir)):

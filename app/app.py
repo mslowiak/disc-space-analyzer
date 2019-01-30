@@ -2,16 +2,17 @@ import sys
 
 from PyQt5.QtWidgets import QApplication, QMainWindow
 
+from view.advanced_search_widget import AdvancedSearchWidget
 from view.results_advanced_search_widget import ResultsAdvancedSearchWidget
 from view.results_default_search_widget import ResultsDefaultSearchWidget
 from view.scan_widget import ScanWidget
-from view.advanced_search_widget import AdvancedSearchWidget
 
 
 class AppMainWindow(QMainWindow):
     """
     Main class of app which manages of view changing.
     """
+
     def __init__(self, parent=None):
         """
         Init method.
@@ -55,13 +56,16 @@ class AppMainWindow(QMainWindow):
         self.setCentralWidget(self.actual_widget)
         self.show()
 
-    def start_results_default_search_view(self):
+    def start_results_default_search_view(self, search_data_results_dict):
         """
         Displays widget in main window.
         Contains results from default search.
         """
         self.hide_widget()
-        self.actual_widget = ResultsDefaultSearchWidget(self)
+        self.actual_widget = ResultsDefaultSearchWidget(file_tree=search_data_results_dict['tree'],
+                                                        top_n_dirs=search_data_results_dict['top_n_dirs'],
+                                                        top_n_files=search_data_results_dict['top_n_files'],
+                                                        parent=self)
         self.setWindowTitle("Disc Space Analyzer - Results of default search")
         self.setCentralWidget(self.actual_widget)
         self.show()

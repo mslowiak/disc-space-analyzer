@@ -3,7 +3,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QStandardItemModel, QStandardItem
 from PyQt5.QtWidgets import QWidget
 
-from controller.disc_scanner import build_file_tree, get_n_biggest, import_data
+from controller.disc_scanner import import_data
 
 
 class ResultsDefaultSearchWidget(QWidget):
@@ -11,7 +11,7 @@ class ResultsDefaultSearchWidget(QWidget):
     Widget class with search results view (grouped by top size used files and directories).
     """
 
-    def __init__(self, parent=None):
+    def __init__(self, file_tree, top_n_dirs, top_n_files, parent=None):
         """"
         Init method.
         Loads view defined in ui/results_default_search_component.ui
@@ -22,14 +22,10 @@ class ResultsDefaultSearchWidget(QWidget):
         top_size_files_header = ['File', 'Location', 'Size']
         top_size_dirs_header = ['Directory', 'Location', 'Size']
 
-        data_files = get_n_biggest()
-
-        data_dirs = get_n_biggest(consider_files=False, consider_directories=True)
-
         self.handle_buttons(parent)
-        self.initialize_results_tree(build_file_tree())
-        self.initialize_top_ten_size_files(top_size_files_header, data_files)
-        self.initialize_top_ten_size_dirs(top_size_dirs_header, data_dirs)
+        self.initialize_results_tree(file_tree=file_tree)
+        self.initialize_top_ten_size_files(top_size_files_header, data=top_n_files)
+        self.initialize_top_ten_size_dirs(top_size_dirs_header, data=top_n_dirs)
 
     def handle_buttons(self, parent):
         """
