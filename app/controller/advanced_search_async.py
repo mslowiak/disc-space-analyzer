@@ -38,7 +38,12 @@ class AdvancedSearchThread(QThread):
         Thread(target=self.handle_searching).start()
 
     def handle_searching(self):
-        # TODO: Konrad twoja metoda, troche zmienilem
+        """
+        Produces search results based from self.path with
+            size constraint specified in self.size_range
+            date constraint specified in self.date_range
+            extensions specified in self.extensions
+        """
         if not self.path:
             self.path = os.path.expanduser('~')
         if self.extensions:

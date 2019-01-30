@@ -35,4 +35,3 @@ class DefaultSearchThread(QThread):
         self.output['top_n_files'] = get_n_biggest(n=self.n)
         self.output['top_n_dirs'] = get_n_biggest(n=self.n, consider_files=False, consider_directories=True)
         self.sig1.emit(self.output)
-
