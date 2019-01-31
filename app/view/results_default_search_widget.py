@@ -75,7 +75,6 @@ class ResultsDefaultSearchWidget(QWidget):
             row.append(item)
             model.appendRow(row)
 
-        self.topTenDirsTableView.sortByColumn(2, Qt.DescendingOrder)
         self.topTenDirsTableView.verticalHeader().setVisible(False)
 
     def initialize_top_ten_size_files(self, header_labels, data):
@@ -108,5 +107,4 @@ class ResultsDefaultSearchWidget(QWidget):
             row.append(item)
             model.appendRow(row)
 
-        self.topTenFilesTableView.sortByColumn(2, Qt.DescendingOrder)
         self.topTenFilesTableView.verticalHeader().setVisible(False)
